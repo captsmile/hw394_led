@@ -46,6 +46,8 @@ void loop() {
 
   if (now_ms - lastNtpSync > NTP_RESYNC_MS) {
     configTime(0, 0, NTP_SERVER);
+    setenv("TZ", cfg.tz, 1);
+    tzset();
     lastNtpSync = now_ms;
   }
 
