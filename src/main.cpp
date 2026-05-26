@@ -37,19 +37,16 @@ void loop() {
     return;
   }
 
-  static unsigned long lastNtpSync = 0;
   static unsigned long lastWeather = millis();
   static unsigned long screenStart = 0;
   static Screen        screen      = SCR_DATETIME;
 
-  unsigned long now_ms = millis();
+  // SNTP resyncs automatically every hour; we just re-assert TZ each cycle
+  // so any internal SDK reset (lwIP SNTP callback) is corrected within 1 second.
+  setenv("TZ", cfg.tz, 1);
+  tzset();
 
-  if (now_ms - lastNtpSync > NTP_RESYNC_MS) {
-    configTime(0, 0, NTP_SERVER);
-    setenv("TZ", cfg.tz, 1);
-    tzset();
-    lastNtpSync = now_ms;
-  }
+  unsigned long now_ms = millis();
 
   if (now_ms - lastWeather > WEATHER_UPDATE_MS) {
     fetchWeather();

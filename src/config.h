@@ -11,7 +11,6 @@
 
 // --- Timings (ms) ---
 #define WIFI_CONNECT_TRIES  20
-#define NTP_RESYNC_MS       3600000UL   // 1 година
 #define WEATHER_UPDATE_MS    600000UL   // 10 хвилин
 
 // --- NTP ---
